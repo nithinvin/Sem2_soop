@@ -8,6 +8,7 @@ int main() {
 
     printf("Enter a string: ");
     fgets(str, sizeof(str), stdin);  // Read input including spaces
+    //scanf(" %[^\n]", str);  // reads until newline, including spaces
 
     for (int i = 0; str[i] != '\0'; i++) {
         char ch = tolower(str[i]);
