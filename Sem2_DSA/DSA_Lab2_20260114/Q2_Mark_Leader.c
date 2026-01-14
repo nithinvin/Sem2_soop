@@ -9,10 +9,21 @@ int main() {
         scanf("%d", &arr[i]);
     }
 
-    for (int i = 0; i < n - 1; i++) {
-        if (arr[i] > arr[i+1]) {
+    for (int i = 0; i < n; i++) {
+        int bigger = 1;
+
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] > arr[i]) {
+                bigger = 0;
+                break;
+            }
+        }
+
+        if (bigger) {
             printf("%d ", arr[i]);
         }
     }
-    printf("%d\n", arr[n-1]);
+    printf("\n");
+
+    return 0;
 }
