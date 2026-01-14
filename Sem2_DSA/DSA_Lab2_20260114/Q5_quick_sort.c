@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-/* Function to swap two elements */
 void swap(int *a, int *b)
 {
     int temp = *a;
@@ -8,11 +7,6 @@ void swap(int *a, int *b)
     *b = temp;
 }
 
-/*
- Partition function
- Pivot is chosen as the first element.
- After partitioning, pivot is placed in its correct position.
-*/
 int partition(int arr[], int low, int high)
 {
     int pivot = arr[low];   // Pivot selection (first element)
@@ -37,7 +31,6 @@ int partition(int arr[], int low, int high)
     return j;   // Pivot index
 }
 
-/* Quick Sort function */
 void quickSort(int arr[], int low, int high)
 {
     if (low < high)
@@ -59,7 +52,6 @@ int main()
 
     quickSort(arr, 0, n - 1);
 
-    // Print sorted list
     for (int i = 0; i < n; i++)
         printf("%d ", arr[i]);
 
