@@ -1,0 +1,9 @@
+The Algorithm
+1. Start.
+2. Input the number of rows (let's call it n).
+3. Initialize an outer loop with a counter i from 1 to n. This represents the current row and the number to be printed.
+4. Initialize an inner loop with a counter j from 1 to i.
+5. Inside the inner loop, print the value of i.
+6. After the inner loop ends, print a newline character (\n) to move to the next row.
+7. Repeat until the outer loop finishes.
+8. End.
