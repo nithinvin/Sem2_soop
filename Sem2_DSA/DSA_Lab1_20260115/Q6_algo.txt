@@ -1,0 +1,11 @@
+The Algorithm
+1. Initialize a variable sum to 0.
+2. Prompt the user to enter an integer.
+3. Read the input into a variable num.
+4. While num is not equal to 0:
+       If num is greater than 0:
+           Add num to sum.
+       Prompt the user for the next integer.
+       Read the next input into num.
+5. Print the final sum.
+6. End.
