@@ -11,11 +11,14 @@ void swap(char *x, char *y) {
 void permute(char *str, int l, int r) {
     int i;
     if (l == r) {
-        printf("%s ", str);
+        printf("%s\n", str);
     } else {
         for (i = l; i <= r; i++) {
+            printf("Swapping %c with %c\n", *(str+l), *(str+i));
             swap((str + l), (str + i));
+            printf("Permuting between %s\n", &str[l+1]);
             permute(str, l + 1, r);
+            printf("Swapping back %c with %c\n", *(str+l), *(str+i));
             swap((str + l), (str + i)); // backtrack
         }
     }
