@@ -1,0 +1,215 @@
+Initial array:
+Index:  0  1  2  3  4
+        ----------------
+Array:  7  4  9  2  6
+
+
+==================================================
+DIVIDE PHASE
+==================================================
+
+mergeSort(0, 4)
+low ->    ^
+high ->                ^
+mid = 2
+
+Left half:  indices 0 to 2
+Right half: indices 3 to 4
+
+
+mergeSort(0, 2)
+low ->    ^
+high ->          ^
+mid = 1
+
+Left half:  indices 0 to 1
+Right half: index 2
+
+
+mergeSort(0, 1)
+low ->    ^
+high ->       ^
+mid = 0
+
+Left half:  index 0
+Right half: index 1
+
+mergeSort(0, 0)  → single element, return
+mergeSort(1, 1)  → single element, return
+
+
+==================================================
+MERGE PHASE — merge(0, 0, 1)
+==================================================
+
+Left subarray (L):  [7]
+Right subarray (R): [4]
+
+i -> L[0] = 7
+j -> R[0] = 4
+k -> index 0
+
+Compare: 7 <= 4 → NO
+Action:  Write 4 to array[k]
+
+Array now:
+Index:  0  1  2  3  4
+Array:  4  4  9  2  6
+        k -> ^
+
+Right exhausted
+
+Copy remaining from L:
+Write 7 to array[1]
+
+After merge(0,0,1):
+Array:  4  7  9  2  6
+
+
+==================================================
+mergeSort(2, 2)  → single element, return
+==================================================
+
+
+==================================================
+MERGE PHASE — merge(0, 1, 2)
+==================================================
+
+Left subarray (L):  [4, 7]
+Right subarray (R): [9]
+
+i -> L[0] = 4
+j -> R[0] = 9
+k -> index 0
+
+Compare: 4 <= 9 → YES
+Write 4
+
+Array:
+4  7  9  2  6
+k -> ^
+
+
+i -> L[1] = 7
+Compare: 7 <= 9 → YES
+Write 7
+
+Array:
+4  7  9  2  6
+    k -> ^
+
+Left exhausted
+
+Copy remaining from R:
+Write 9
+
+After merge(0,1,2):
+Array:  4  7  9  2  6
+
+
+==================================================
+mergeSort(3, 4)
+==================================================
+
+low ->             ^
+high ->                ^
+mid = 3
+
+Left half: index 3
+Right half: index 4
+
+mergeSort(3, 3) → return
+mergeSort(4, 4) → return
+
+
+==================================================
+MERGE PHASE — merge(3, 3, 4)
+==================================================
+
+Left subarray (L):  [2]
+Right subarray (R): [6]
+
+i -> L[0] = 2
+j -> R[0] = 6
+k -> index 3
+
+Compare: 2 <= 6 → YES
+Write 2
+
+Array:
+4  7  9  2  6
+          k -> ^
+
+Left exhausted
+
+Copy remaining from R:
+Write 6
+
+After merge(3,3,4):
+Array:  4  7  9  2  6
+
+
+==================================================
+FINAL MERGE — merge(0, 2, 4)
+==================================================
+
+Left subarray (L):  [4, 7, 9]
+Right subarray (R): [2, 6]
+
+i -> L[0] = 4
+j -> R[0] = 2
+k -> index 0
+
+Compare: 4 <= 2 → NO
+Write 2
+
+Array:
+2  7  9  2  6
+k -> ^
+
+
+i -> L[0] = 4
+j -> R[1] = 6
+Compare: 4 <= 6 → YES
+Write 4
+
+Array:
+2  4  9  2  6
+    k -> ^
+
+
+i -> L[1] = 7
+j -> R[1] = 6
+Compare: 7 <= 6 → NO
+Write 6
+
+Array:
+2  4  6  2  6
+        k -> ^
+
+Right exhausted
+
+Copy remaining from L:
+Write 7
+Write 9
+
+After merge(0,2,4):
+Array:  2  4  6  7  9
+
+
+==================================================
+Sorted array:
+==================================================
+2 4 6 7 9
+
+Key intuition:
+
+- Merge sort does no sorting while dividing.
+- All the real work happens while merging.
+
+Pointer roles recap:
+
+- low / mid / high → define ranges
+- i → walks left subarray
+- j → walks right subarray
+- k → writes into original array
