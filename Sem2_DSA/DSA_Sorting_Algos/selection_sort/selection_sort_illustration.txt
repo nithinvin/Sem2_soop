@@ -178,3 +178,13 @@ Array:  2  4  6  7  9
 Sorted array:
 ==================================================
 2 4 6 7 9
+
+
+Why this illustration is very powerful for learning
+
+- Shows three moving concepts simultaneously: i, j, minIndex
+- Makes it obvious that:
+  - j scans
+  - minIndex jumps
+  - moves only after a full scan
+- Clearly separates comparison phase from swap phase
