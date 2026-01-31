@@ -30,19 +30,21 @@ int main() {
     for (i = 0; i < n - 1; i++) {
         printf("Pass i = %d\n", i);
         minIndex = i;
-        printf("minIndex initialized to i which is %d\n", minIndex);
+        printf("minIndex = i, arr[minIndex] = (%d)\n", arr[minIndex]);
 
         for (j = i + 1; j < n; j++) {
             if (arr[j] < arr[minIndex]) {
-                printf("j is at %d, arr[j] is %d which is smaller than arr[minIndex] which is %d\n", j, arr[j], arr[minIndex]);
+                printf("j is at index %d, arr[j] (%d) and is smaller than arr[minIndex] (%d)\n", j, arr[j], arr[minIndex]);
                 minIndex = j;
-                printf("minIndex becomes %d\n", minIndex);
+                printf("minIndex becomes %d - Value(%d)\n", minIndex, arr[minIndex]);
+            } else {
+                printf("j is at index %d, arr[j] (%d) and is NOT smaller than arr[minIndex] (%d)\n", j, arr[j], arr[minIndex]);
             }
         }
 
         /* Swap only if needed */
         if (minIndex != i) {
-            printf("arr[i] %d swapped with arr[minIndex] %d\n", minIndex);
+            printf("i = %d, minIndex = %d, arr[i] %d swapped with arr[minIndex] %d\n", i, minIndex, arr[i], arr[minIndex]);
             temp = arr[i];
             arr[i] = arr[minIndex];
             arr[minIndex] = temp;
