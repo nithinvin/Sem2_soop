@@ -1,0 +1,180 @@
+Initial array:
+Index:  0  1  2  3  4
+        ----------------
+Array:  7  4  9  2  6
+
+
+==================================================
+PASS i = 0
+==================================================
+
+Start of pass:
+i ->    ^
+m ->    ^
+Index:  0  1  2  3  4
+Array:  7  4  9  2  6
+
+
+j = 1
+i ->    ^
+m ->    ^
+j ->       ^
+Index:  0  1  2  3  4
+Array:  7  4  9  2  6
+Compare: 4 < 7  → YES
+Action:  minIndex moves to index 1
+
+
+j = 2
+i ->    ^
+m ->       ^
+j ->          ^
+Index:  0  1  2  3  4
+Array:  7  4  9  2  6
+Compare: 9 < 4  → NO
+
+
+j = 3
+i ->    ^
+m ->       ^
+j ->             ^
+Index:  0  1  2  3  4
+Array:  7  4  9  2  6
+Compare: 2 < 4  → YES
+Action:  minIndex moves to index 3
+
+
+j = 4
+i ->    ^
+m ->             ^
+j ->                ^
+Index:  0  1  2  3  4
+Array:  7  4  9  2  6
+Compare: 6 < 2  → NO
+
+
+End of pass i = 0
+Swap arr[i] (7) with arr[minIndex] (2)
+
+Current array:
+Index:  0  1  2  3  4
+Array:  2  4  9  7  6
+
+
+==================================================
+PASS i = 1
+==================================================
+
+Start of pass:
+i ->       ^
+m ->       ^
+Index:  0  1  2  3  4
+Array:  2  4  9  7  6
+
+
+j = 2
+i ->       ^
+m ->       ^
+j ->          ^
+Index:  0  1  2  3  4
+Array:  2  4  9  7  6
+Compare: 9 < 4  → NO
+
+
+j = 3
+i ->       ^
+m ->       ^
+j ->             ^
+Index:  0  1  2  3  4
+Array:  2  4  9  7  6
+Compare: 7 < 4  → NO
+
+
+j = 4
+i ->       ^
+m ->       ^
+j ->                ^
+Index:  0  1  2  3  4
+Array:  2  4  9  7  6
+Compare: 6 < 4  → NO
+
+
+End of pass i = 1
+No swap needed
+
+Current array:
+Index:  0  1  2  3  4
+Array:  2  4  9  7  6
+
+
+==================================================
+PASS i = 2
+==================================================
+
+Start of pass:
+i ->          ^
+m ->          ^
+Index:  0  1  2  3  4
+Array:  2  4  9  7  6
+
+
+j = 3
+i ->          ^
+m ->          ^
+j ->             ^
+Index:  0  1  2  3  4
+Array:  2  4  9  7  6
+Compare: 7 < 9  → YES
+Action:  minIndex moves to index 3
+
+
+j = 4
+i ->          ^
+m ->             ^
+j ->                ^
+Index:  0  1  2  3  4
+Array:  2  4  9  7  6
+Compare: 6 < 7  → YES
+Action:  minIndex moves to index 4
+
+
+End of pass i = 2
+Swap arr[i] (9) with arr[minIndex] (6)
+
+Current array:
+Index:  0  1  2  3  4
+Array:  2  4  6  7  9
+
+
+==================================================
+PASS i = 3
+==================================================
+
+Start of pass:
+i ->             ^
+m ->             ^
+Index:  0  1  2  3  4
+Array:  2  4  6  7  9
+
+
+j = 4
+i ->             ^
+m ->             ^
+j ->                ^
+Index:  0  1  2  3  4
+Array:  2  4  6  7  9
+Compare: 9 < 7  → NO
+
+
+End of pass i = 3
+No swap needed
+
+Current array:
+Index:  0  1  2  3  4
+Array:  2  4  6  7  9
+
+
+==================================================
+Sorted array:
+==================================================
+2 4 6 7 9
