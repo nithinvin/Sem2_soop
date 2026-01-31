@@ -1,0 +1,174 @@
+Initial array:
+Index:  0  1  2  3  4
+        ----------------
+Array:  7  4  9  2  6
+
+
+==================================================
+PASS i = 1   (key = 4)
+==================================================
+
+Start of pass:
+i ->       ^
+Index:  0  1  2  3  4
+Array:  7  4  9  2  6
+
+j = 0
+j ->    ^
+i ->       ^
+Index:  0  1  2  3  4
+Array:  7  4  9  2  6
+Compare: 7 > key(4) → YES
+Action:  Shift 7 one position to the right
+
+After shift:
+Index:  0  1  2  3  4
+Array:  7  7  9  2  6
+
+j becomes -1 (stop)
+
+Insert key at j + 1 = 0
+
+Current array:
+Index:  0  1  2  3  4
+Array:  4  7  9  2  6
+
+
+==================================================
+PASS i = 2   (key = 9)
+==================================================
+
+Start of pass:
+i ->          ^
+Index:  0  1  2  3  4
+Array:  4  7  9  2  6
+
+j = 1
+j ->       ^
+i ->          ^
+Index:  0  1  2  3  4
+Array:  4  7  9  2  6
+Compare: 7 > key(9) → NO
+
+No shifts needed
+
+Current array:
+Index:  0  1  2  3  4
+Array:  4  7  9  2  6
+
+
+==================================================
+PASS i = 3   (key = 2)
+==================================================
+
+Start of pass:
+i ->             ^
+Index:  0  1  2  3  4
+Array:  4  7  9  2  6
+
+j = 2
+j ->          ^
+i ->             ^
+Index:  0  1  2  3  4
+Array:  4  7  9  2  6
+Compare: 9 > key(2) → YES
+Action:  Shift 9 one position to the right
+
+After shift:
+Index:  0  1  2  3  4
+Array:  4  7  9  9  6
+
+
+j = 1
+j ->       ^
+i ->             ^
+Index:  0  1  2  3  4
+Array:  4  7  9  9  6
+Compare: 7 > key(2) → YES
+Action:  Shift 7 one position to the right
+
+After shift:
+Index:  0  1  2  3  4
+Array:  4  7  7  9  6
+
+
+j = 0
+j ->    ^
+i ->             ^
+Index:  0  1  2  3  4
+Array:  4  7  7  9  6
+Compare: 4 > key(2) → YES
+Action:  Shift 4 one position to the right
+
+After shift:
+Index:  0  1  2  3  4
+Array:  4  4  7  9  6
+
+j becomes -1 (stop)
+
+Insert key at j + 1 = 0
+
+Current array:
+Index:  0  1  2  3  4
+Array:  2  4  7  9  6
+
+
+==================================================
+PASS i = 4   (key = 6)
+==================================================
+
+Start of pass:
+i ->                ^
+Index:  0  1  2  3  4
+Array:  2  4  7  9  6
+
+j = 3
+j ->             ^
+i ->                ^
+Index:  0  1  2  3  4
+Array:  2  4  7  9  6
+Compare: 9 > key(6) → YES
+Action:  Shift 9 one position to the right
+
+After shift:
+Index:  0  1  2  3  4
+Array:  2  4  7  9  9
+
+
+j = 2
+j ->          ^
+i ->                ^
+Index:  0  1  2  3  4
+Array:  2  4  7  9  9
+Compare: 7 > key(6) → YES
+Action:  Shift 7 one position to the right
+
+After shift:
+Index:  0  1  2  3  4
+Array:  2  4  7  7  9
+
+
+j = 1
+j ->       ^
+i ->                ^
+Index:  0  1  2  3  4
+Array:  2  4  7  7  9
+Compare: 4 > key(6) → NO (stop)
+
+Insert key at j + 1 = 2
+
+Current array:
+Index:  0  1  2  3  4
+Array:  2  4  6  7  9
+
+
+==================================================
+Sorted array:
+==================================================
+2 4 6 7 9
+
+- i moves right
+- j moves left
+- Elements shift right
+- i stays fixed while insertion happens
+- Insertion sort builds a sorted prefix
