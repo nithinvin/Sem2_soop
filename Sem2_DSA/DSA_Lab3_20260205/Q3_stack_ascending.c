@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define STACK_SIZE 20
+#define STACK_SIZE 16
 
 int main() {
     int A[STACK_SIZE], B[STACK_SIZE];
