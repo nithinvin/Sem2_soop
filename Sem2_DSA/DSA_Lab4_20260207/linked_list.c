@@ -155,40 +155,30 @@ void search(int val) {
 
 /* Sort List (No Swapping Data) */
 void sortList() {
-    struct node *i, *j, *min, *prevMin, *prev;
+    struct node *sorted = NULL;
+    struct node *curr = head;
 
-    for (i = head; i != NULL; i = i->next) {
-        min = i;
-        prevMin = NULL;
-        prev = i;
+    while (curr != NULL) {
+        struct node *next = curr->next;
 
-        for (j = i->next; j != NULL; j = j->next) {
-            if (j->data < min->data) {
-                min = j;
-                prevMin = prev;
-            }
-            prev = j;
+        /* Insert curr into sorted list */
+        if (sorted == NULL || curr->data < sorted->data) {
+            curr->next = sorted;
+            sorted = curr;
+        } else {
+            struct node *temp = sorted;
+            while (temp->next != NULL && temp->next->data < curr->data)
+                temp = temp->next;
+
+            curr->next = temp->next;
+            temp->next = curr;
         }
 
-        if (min != i) {
-            if (prevMin != NULL)
-                prevMin->next = min->next;
-
-            min->next = i->next;
-
-            if (i == head) {
-                head = min;
-            } else {
-                struct node *temp = head;
-                while (temp->next != i)
-                    temp = temp->next;
-                temp->next = min;
-            }
-
-            i->next = min->next;
-        }
+        curr = next;
     }
-    printf("List sorted\n");
+
+    head = sorted;
+    printf("List sorted successfully\n");
 }
 
 /* Reverse List (Change Links Only) */
