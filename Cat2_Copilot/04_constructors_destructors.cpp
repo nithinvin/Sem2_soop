@@ -53,6 +53,7 @@ int main() {
     cout << "--- Creating objects ---" << endl;
 
     Book b1;                       // calls default constructor
+    // b1.title = "Harry Potter";
     Book b2("C++ Primer", 49.99);  // calls parameterized constructor
     Book b3 = b2;                  // calls copy constructor
 
@@ -67,7 +68,9 @@ int main() {
         b4.display();
         cout << "  b4 going out of scope..." << endl;
     }  // b4 destructor called here
+    b4.~Book();
 
     cout << "\n--- main() ending, remaining destructors fire in reverse ---" << endl;
     return 0;
+    b3.~Book();
 }

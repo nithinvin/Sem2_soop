@@ -28,9 +28,16 @@ using namespace std;
 class BankAccount {
     double balance;  // private by default — hidden from outside
 public:
-    BankAccount(double b) : balance(b) {}
-    void deposit(double amt) { balance += amt; }
-    double getBalance() const { return balance; }  // controlled access
+    BankAccount(double b) {
+        balance = b;
+    }
+    void deposit(double amt) { 
+        balance += amt; 
+    }
+    double getBalance() const { 
+        return balance; 
+    }  // controlled access
+    ~BackAccount() {}
 };
 
 // --- ABSTRACTION ---
@@ -65,6 +72,8 @@ int main() {
     BankAccount acc(1000);
     acc.deposit(500);
     cout << "Balance: " << acc.getBalance() << endl;
+
+    //Shape s;
 
     // Inheritance + Polymorphism
     Circle c(5);

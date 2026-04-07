@@ -75,6 +75,8 @@ int main() {
     Manager mgr("Bob", 95000);
     mgr.display();
     mgr.showDept();
+    // cout << mgr.salary;
+    cout << mgr.getSalary();
 
     return 0;
 }
