@@ -85,55 +85,261 @@ Now imagine the books are arranged in a **balanced tree-like rack** — you can 
 
 | Term | Meaning |
 |------|---------|
-| **Height of a node** | Number of edges on the longest path from that node down to a leaf. A leaf has height **0**. An empty (NULL) child has height **-1**. |
-| **Balance Factor (BF)** | `Height(left subtree) - Height(right subtree)` |
-| **Balanced** | Balance factor is **-1, 0, or +1** |
-| **Unbalanced** | Balance factor is **< -1** or **> +1** (i.e., ±2 or more) |
-| **Rotation** | A local tree restructuring operation that restores balance |
+| **Height of a node** | Number of **edges** on the longest path going **downward** from that node to a leaf node. |
+| **Balance Factor (BF)** | `Height(Left Subtree) - Height(Right Subtree)` for a given node |
+| **Balanced node** | Balance factor is **-1, 0, or +1** |
+| **Unbalanced node** | Balance factor is **≤ -2** or **≥ +2** |
+| **Rotation** | A local restructuring operation that fixes an unbalanced node |
 
 ---
 
 ## 4. Balance Factor — The Heart of AVL
 
-For every node:
+### Step 1 — Understand HEIGHT first
+
+> **Height of a node** = number of edges on the longest downward path from that node to a leaf.
+
+**Two special rules to memorize:**
+- A **leaf node** (no children) has height = **0**
+- A **NULL** (empty / non-existent) node has height = **-1**
+
+Why -1 for NULL? Because when a node has only one child, we still need to measure the "empty" side. Saying NULL = -1 makes the formula consistent.
+
+#### Height Examples — Build intuition one level at a time
 
 ```
-Balance Factor = Height(Left Subtree) - Height(Right Subtree)
+  EXAMPLE A: Single node
+
+        10          height of 10 = 0
+                    (it is a leaf — no edges going down)
 ```
 
-### Example: Computing Balance Factors
-
 ```
-            30 [BF = 1]
-           /  \
-   [BF=0] 20   40 [BF = 0]
-          /
-  [BF=0] 10
+  EXAMPLE B: Two levels
+
+        20          height of 20 = 1
+       /            (one edge down to 10)
+      10            height of 10 = 0  (leaf)
 ```
 
-Let's calculate step by step:
-- Node `10`: No children → Left height = -1, Right height = -1 → BF = -1 - (-1) = **0** ✅
-- Node `40`: No children → BF = **0** ✅
-- Node `20`: Left child (10) has height 0, No right child (height -1) → BF = 0 - (-1) = **1** ✅
-- Node `30`: Left subtree height = 1, Right subtree height = 0 → BF = 1 - 0 = **1** ✅
+```
+  EXAMPLE C: Three levels, fully balanced
 
-**All nodes have BF ∈ {-1, 0, +1}**, so this is a valid AVL tree!
+        30          height of 30 = 2  (longest path: 30→20→10, two edges)
+       /  \
+      20   40       height of 20 = 1, height of 40 = 0  (40 is a leaf)
+     /
+    10              height of 10 = 0  (leaf)
+```
+
+```
+  EXAMPLE D: Three levels, right-only chain
+
+        10          height of 10 = 2
+          \         (longest path: 10→20→30, two edges)
+           20       height of 20 = 1
+             \
+              30    height of 30 = 0  (leaf)
+```
+
+**Key insight:** Height is always measured going **downward**. Count the number of lines (edges) you cross on the longest path from that node to the bottom.
+
+---
+
+### Step 2 — Understand BALANCE FACTOR
+
+Once you know the heights, the balance factor is straightforward:
+
+```
+  Balance Factor (BF) of a node = Height(its Left child) − Height(its Right child)
+```
+
+If a child doesn't exist (NULL), use height = **-1**.
+
+**What the sign of BF tells you:**
+- BF = **0** → Left and right sides are equally tall
+- BF = **+1** → Left side is 1 level taller (OK)
+- BF = **-1** → Right side is 1 level taller (OK)
+- BF = **+2** → Left side is 2 levels taller → **VIOLATION, fix needed**
+- BF = **-2** → Right side is 2 levels taller → **VIOLATION, fix needed**
+
+---
+
+### Step 3 — Worked Examples: Computing Balance Factor
+
+**Always calculate BF from the bottom up** (leaves first, then move upward).
+
+#### Example 1 — Simple 3-node balanced tree
+
+```
+        30
+       /  \
+      20   40
+```
+
+| Node | Left child | Left height | Right child | Right height | BF = Left − Right |
+|:----:|:----------:|:-----------:|:-----------:|:------------:|:-----------------:|
+| 20   | NULL       | **-1**      | NULL        | **-1**       | -1 − (-1) = **0** |
+| 40   | NULL       | **-1**      | NULL        | **-1**       | -1 − (-1) = **0** |
+| 30   | node 20    | **0**       | node 40     | **0**        | 0 − 0 = **0**     |
+
+All BFs are 0 → **Perfectly balanced** ✅
+
+---
+
+#### Example 2 — Four nodes, slightly left-heavy
+
+```
+        30
+       /  \
+      20   40
+     /
+    10
+```
+
+**Bottom up — start at the leaves:**
+
+| Node | Left child | Left height | Right child | Right height | BF = Left − Right |
+|:----:|:----------:|:-----------:|:-----------:|:------------:|:-----------------:|
+| 10   | NULL       | **-1**      | NULL        | **-1**       | -1 − (-1) = **0** |
+| 40   | NULL       | **-1**      | NULL        | **-1**       | -1 − (-1) = **0** |
+| 20   | node 10    | **0**       | NULL        | **-1**       | 0 − (-1) = **+1** |
+| 30   | node 20    | **1**       | node 40     | **0**        | 1 − 0 = **+1**    |
+
+All BFs are in {-1, 0, +1} → **Valid AVL tree** ✅
+
+```
+        30 [BF=+1]
+       /  \
+ [BF=+1] 20   40 [BF=0]
+         /
+   [BF=0] 10
+```
+
+> Notice: The height of node `20` is 1 (it has one edge going down to `10`). The height of node `30`'s left subtree is 1 (because `20` is at height 1).
+
+---
+
+#### Example 3 — Five nodes, violation appears
+
+Now insert `5` into the tree above:
+
+```
+        30
+       /  \
+      20   40
+     /
+    10
+   /
+  5
+```
+
+**Bottom up:**
+
+| Node | Left child | Left height | Right child | Right height | BF = Left − Right |
+|:----:|:----------:|:-----------:|:-----------:|:------------:|:-----------------:|
+| 5    | NULL       | **-1**      | NULL        | **-1**       | **0**             |
+| 10   | node 5     | **0**       | NULL        | **-1**       | 0 − (-1) = **+1** |
+| 40   | NULL       | **-1**      | NULL        | **-1**       | **0**             |
+| 20   | node 10    | **1**       | NULL        | **-1**       | 1 − (-1) = **+2** ← **VIOLATION!** |
+| 30   | node 20    | **2**       | node 40     | **0**        | 2 − 0 = **+2** ← **VIOLATION!** |
+
+```
+          30 [BF=+2] ⚠️
+         /  \
+ [BF=+2] 20   40 [BF=0]
+         /
+   [BF=+1] 10
+           /
+      [BF=0] 5
+```
+
+> **Rule:** When you find multiple violations going bottom-up, you always fix the **lowest** (deepest) violation first. Here, fix node `20` first.
+
+---
+
+#### Example 4 — Right-heavy tree
+
+```
+      10
+        \
+         20
+           \
+            30
+```
+
+| Node | Left child | Left height | Right child | Right height | BF = Left − Right |
+|:----:|:----------:|:-----------:|:-----------:|:------------:|:-----------------:|
+| 30   | NULL       | **-1**      | NULL        | **-1**       | **0**             |
+| 20   | NULL       | **-1**      | node 30     | **0**        | -1 − 0 = **-1**   |
+| 10   | NULL       | **-1**      | node 20     | **1**        | -1 − 1 = **-2** ← **VIOLATION!** |
+
+```
+  10 [BF=-2] ⚠️
+    \
+     20 [BF=-1]
+       \
+        30 [BF=0]
+```
+
+BF = -2 means the **right side** is 2 levels heavier than the left.
+
+---
+
+#### Example 5 — Bigger balanced tree (verify you can do it)
+
+```
+        40
+       /  \
+      20   60
+     / \   / \
+    10  30 50  70
+```
+
+| Node | Left height | Right height | BF |
+|:----:|:-----------:|:------------:|:--:|
+| 10   | -1          | -1           | 0  |
+| 30   | -1          | -1           | 0  |
+| 50   | -1          | -1           | 0  |
+| 70   | -1          | -1           | 0  |
+| 20   | 0 (node 10) | 0 (node 30)  | 0  |
+| 60   | 0 (node 50) | 0 (node 70)  | 0  |
+| 40   | 1 (node 20) | 1 (node 60)  | 0  |
+
+Every node has BF = 0 → **Perfect AVL tree** ✅
+
+---
+
+### The Recipe — How to Calculate BF for Any Node
+
+```
+  1. Find the LEFT child of the node.
+     - If it exists → its height = (1 + max height among ITS children)
+     - If it does NOT exist → height = -1
+
+  2. Find the RIGHT child of the node.
+     - Same rules as above.
+
+  3. BF = Left height − Right height
+
+  4. Always calculate bottom-up (start from leaf nodes, work up to root).
+```
 
 ### When Does It Break?
 
-If we now insert `5`:
+Whenever you insert a node, walk **upward** recalculating BFs. The moment any node gets BF = **+2** or **-2**, a rotation is needed.
 
 ```
-              30 [BF = 2] ⚠️ UNBALANCED!
-             /  \
-     [BF=1] 20   40 [BF = 0]
-            /
-    [BF=1] 10
+          30 [BF = +2] ⚠️ UNBALANCED!
+         /  \
+ [BF=+1] 20   40 [BF = 0]
+         /
+   [BF=+1] 10
            /
-   [BF=0] 5
+     [BF=0] 5
 ```
 
-- Node `30` now has BF = **2** → **VIOLATION!**
+- Node `30` now has BF = **+2** → **VIOLATION!**
 - We need a **rotation** to fix this.
 
 ---
