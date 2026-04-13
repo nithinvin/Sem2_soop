@@ -211,9 +211,11 @@ All BFs are in {-1, 0, +1} → **Valid AVL tree** ✅
 ```
         30 [BF=+1]
        /  \
- [BF=+1] 20   40 [BF=0]
-         /
-   [BF=0] 10
+      20   40
+  [BF=+1]  [BF=0]
+     /
+    10
+  [BF=0]
 ```
 
 > Notice: The height of node `20` is 1 (it has one edge going down to `10`). The height of node `30`'s left subtree is 1 (because `20` is at height 1).
@@ -247,11 +249,14 @@ Now insert `5` into the tree above:
 ```
           30 [BF=+2] ⚠️
          /  \
- [BF=+2] 20   40 [BF=0]
-         /
-   [BF=+1] 10
-           /
-      [BF=0] 5
+        20   40
+    [BF=+2] ⚠️  [BF=0]
+       /
+      10
+   [BF=+1]
+      /
+     5
+   [BF=0]
 ```
 
 > **Rule:** When you find multiple violations going bottom-up, you always fix the **lowest** (deepest) violation first. Here, fix node `20` first.
@@ -330,21 +335,67 @@ Every node has BF = 0 → **Perfect AVL tree** ✅
 Whenever you insert a node, walk **upward** recalculating BFs. The moment any node gets BF = **+2** or **-2**, a rotation is needed.
 
 ```
-          30 [BF = +2] ⚠️ UNBALANCED!
+          30 [BF=+2] ⚠️ UNBALANCED!
          /  \
- [BF=+1] 20   40 [BF = 0]
-         /
-   [BF=+1] 10
-           /
-     [BF=0] 5
+        20   40
+    [BF=+2] ⚠️  [BF=0]
+       /
+      10
+   [BF=+1]
+      /
+     5
+   [BF=0]
 ```
 
-- Node `30` now has BF = **+2** → **VIOLATION!**
+- Both node `20` and node `30` have BF = **+2** → two **VIOLATIONS**!
+- Fix the **lowest** violation first (node `20`), and after rotating, node `30` automatically becomes balanced too.
 - We need a **rotation** to fix this.
 
 ---
 
 ## 5. The 4 Types of Rotations
+
+### What is a Rotation?
+
+A **rotation** is a small, local operation that moves nodes around to fix an imbalance — without breaking the BST ordering rule.
+
+It only affects **2–3 nodes** (and their subtrees) at a time. Everything else in the tree stays untouched.
+
+#### Why is it called a "rotation"?
+
+Look at the link between a parent and its child. A rotation "spins" that link — one node climbs up, the other swings down, like a see-saw pivoting around a point:
+
+```
+  BEFORE Right Rotation:      AFTER Right Rotation:
+
+        Z                           Y
+       /           ──▶            /   \
+      Y                          ?     Z
+
+  The Z–Y link has "rotated":
+  Y was below Z (pointing left),
+  now Z is below Y (pointing right).
+  It looks like the link rotated 90° clockwise.
+```
+
+- **Right Rotation** → the left child climbs up; the subtree tilts to the right
+- **Left Rotation** → the right child climbs up; the subtree tilts to the left
+
+#### What makes a rotation safe?
+
+A rotation **preserves the in-order (sorted) sequence** of all nodes. If the BST order was correct before the rotation, it is still correct after. The tree just has a different shape — like reshuffling books on a shelf without changing their alphabetical order.
+
+#### What does a rotation actually change?
+
+| What changes | What stays the same |
+|---|---|
+| Which node is the local root | In-order traversal (BST sorted order) |
+| Parent–child pointers between 2–3 nodes | All other nodes in the tree |
+| Heights and balance factors of affected nodes | Values stored in nodes |
+
+---
+
+### The 4 Cases
 
 When a node becomes unbalanced (BF = +2 or -2), we identify the **pattern** of imbalance and apply the correct rotation.
 
