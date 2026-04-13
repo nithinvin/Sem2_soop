@@ -367,7 +367,7 @@ There are exactly **4 cases**:
 
 **Real-life analogy:** A tree leaning too much to the left — you "pull" the middle node up to straighten it.
 
-#### Example: Insert 5, 10, 15 and then insert 3, then insert 1
+#### Example: Insert 30, 20, 35, 10, 25 — then insert 5 (triggers LL violation at node 30)
 
 Let's just look at the moment it breaks. Say we have:
 
